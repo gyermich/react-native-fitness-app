@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Platform } from 'react-native'
+import { View, Platform, StatusBar as ReactStatusBar} from 'react-native'
 import AddEntry from './components/AddEntry'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
@@ -8,6 +8,16 @@ import History from './components/History'
 import { createBottomTabNavigator } from 'react-navigation'
 import { purple, white } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { Constants } from 'expo'
+
+
+function StatusBar ({backgroundColor, ...props}) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <ReactStatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
 
 const Tabs = createBottomTabNavigator(
   {
@@ -50,7 +60,8 @@ export default class App extends React.Component {
     return (
       <Provider store={createStore(reducer)} >
           <View style={{ flex: 1 }}>
-          <Tabs />
+            <StatusBar backgroundColor={purple} barStyle="light-content" />
+            <Tabs />
           </View>
         </Provider>
     );
